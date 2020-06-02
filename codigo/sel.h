@@ -164,7 +164,7 @@ Matrix createLocalK(int e,mesh &m){
     //Preparando matrixH (En clase conocida simplemente como G)
     lambda = m.getParameter(LAMBDA);
     calculateBPrima(BPrima);
-    productRealMatrix(lambda*(J*2)/(18*D),productMatrixMatrix(g_matrix,productMatrixMatrix(Alpha,BPrima,2,2,3),6,2,3),matrixG);
+    productRealMatrix(lambda*J*2/(18*D),productMatrixMatrix(g_matrix,productMatrixMatrix(Alpha,BPrima,2,2,3),6,2,3),matrixG);
 
     //Preparando matrixD (En clase conocida simplemente como D)
     transpose(BPrima,BPrimat);
