@@ -35,14 +35,10 @@ int main(int argc, char *argv[])
     ensamblaje(m,localKs,localbs,K,b);
     showMatrix(K); showVector(b);
     cout << "******************************\n";
-    //cout << K.size() << " - "<<K.at(0).size()<<"\n";
-    //cout << b.size() <<"\n";
 
     applyDirichlet(m,K,b);
     showMatrix(K); showVector(b);
     cout << "******************************\n";
-    //cout << K.size() << " - "<<K.at(0).size()<<"\n";
-    //cout << b.size() <<"\n";
 
     zeroes(T,b.size());
     calculate(K,b,T);
