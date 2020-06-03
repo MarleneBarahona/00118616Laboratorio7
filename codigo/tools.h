@@ -81,8 +81,8 @@ void leerMallayCondiciones(mesh &m,char *filename){
     addExtension(inputfilename,filename,".dat");
     file.open(inputfilename);
 
-    //file >> tau >> k_kte >> delta >> lambda >> f_x >> f_y >> eta;
-    file >> tau >> k_kte >> lambda >> f_x >> f_y >> delta >> eta;
+    file >> tau >> k_kte >> delta >> lambda >> f_x >> f_y >> eta;
+    //file >> tau >> k_kte >> lambda >> f_x >> f_y >> delta >> eta;
     //cout <<u_bar<<nu<<rho<<f_x<<f_y<<"\n";
     file >> nnodes >> neltos >> ndirich_u >> ndirich_v >>ndirich_p;
     //cout <<nnodes<<neltos<<ndirich_u<<ndirich_v<<ndirich_p<<"\n";
