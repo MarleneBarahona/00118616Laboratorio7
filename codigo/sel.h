@@ -134,7 +134,7 @@ Matrix createLocalK(int e,mesh &m){
     Matrix K,g_matrix,g_matrix_t,Alpha,Beta,Alphat,Betat,BPrima,BPrimat;
 
     //Preparando matrixA (En clase conocida simplemente como A)
-    tau = m.getParameter(ADJECTIVE_VELOCITY);
+    tau = m.getParameter(TAU);
     J = calculateLocalJ(e,m);
     D = calculateLocalD(e,m);
 
@@ -149,21 +149,21 @@ Matrix createLocalK(int e,mesh &m){
     productRealMatrix(tau*J/(24*D),productMatrixMatrix(g_matrix,productMatrixMatrix(Alpha,Beta,2,2,6),6,2,6),matrixA);
 
     //Preparando matrixK (En clase conocida simplemente como K)
-    k_kte = m.getParameter(DYNAMIC_VISCOSITY);
+    k_kte = m.getParameter(K_KTE);
     Ae = calculateLocalArea(e,m);
     transpose(Alpha,Alphat);
     transpose(Beta,Betat);
     productRealMatrix(k_kte*Ae/(D*D),productMatrixMatrix(Betat,productMatrixMatrix(Alphat,productMatrixMatrix(Alpha,Beta,2,2,6),2,2,6),6,2,6),matrixK);
 
     //Preparando matrixL (En clase conocida simplemente como nada porque no estaba jaja en mi ejercicio era G antes de integrar)
-    delta = m.getParameter(DENSITY);
+    delta = m.getParameter(DELTA);
     calculateBPrima(BPrima);
-    productRealMatrix((-delta*Ae)/(8*(D*D)),productMatrixMatrix(Betat,productMatrixMatrix(Alphat,productMatrixMatrix(Alpha, BPrima,2,2,3),2,2,3),6,2,3),matrixL);
+    productRealMatrix((-delta)*Ae/(8*(D*D)),productMatrixMatrix(Betat,productMatrixMatrix(Alphat,productMatrixMatrix(Alpha, BPrima,2,2,3),2,2,3),6,2,3),matrixL);
 
 
     //Preparando matrixH (En clase conocida simplemente como G)
     lambda = m.getParameter(LAMBDA);
-    calculateBPrima(BPrima);
+    //calculateBPrima(BPrima);
     productRealMatrix(lambda*J*2/(18*D),productMatrixMatrix(g_matrix,productMatrixMatrix(Alpha,BPrima,2,2,3),6,2,3),matrixG);
 
     //Preparando matrixD (En clase conocida simplemente como D)
@@ -174,7 +174,7 @@ Matrix createLocalK(int e,mesh &m){
     //Colocando submatrices en K
     zeroes(K,9);
     ubicarSubMatriz(K,0,5,0,5,sumMatrix(matrixA,matrixK,6,6));
-    ubicarSubMatriz(K,0,5,6,8,sumMatrix(matrixL,matrixG,6,3));
+    ubicarSubMatriz(K,0,5,6,8,sumMatrix(matrixG,matrixL,6,3));
     ubicarSubMatriz(K,6,8,0,5,matrixD);
 
     return K;
@@ -186,6 +186,7 @@ Vector createLocalb(int e,mesh &m){
 
     float f_x = m.getParameter(EXTERNAL_FORCE_X);
     float f_y = m.getParameter(EXTERNAL_FORCE_Y);
+    
     float eta = m.getParameter(ETA);
     float J = calculateLocalJ(e,m);
     calculateGammaMatrix(g_matrix);
@@ -196,7 +197,7 @@ Vector createLocalb(int e,mesh &m){
     zeroes(b0,6);
     productMatrixVector(g_matrix,f,b0);
     productRealVector(J/6,b0,b);
-    float aux = (J*eta)/6;
+    //float aux = (J*eta)/6;
     b.push_back((J*eta)/6); b.push_back((J*eta)/6); b.push_back((J*eta)/6);
 
     return b;

@@ -1,6 +1,6 @@
 enum lines {NOLINE,SINGLELINE,DOUBLELINE};
 enum modes {NOMODE,INT_FLOAT,INT_FLOAT_FLOAT,INT_INT_INT_INT};
-enum parameters {ADJECTIVE_VELOCITY,DYNAMIC_VISCOSITY,DENSITY, LAMBDA,ETA, EXTERNAL_FORCE_X,EXTERNAL_FORCE_Y};
+enum parameters {TAU,K_KTE,DELTA, LAMBDA,ETA, EXTERNAL_FORCE_X,EXTERNAL_FORCE_Y};
 enum sizes {NODES,ELEMENTS,DIRICHLET};
 enum coords {EQUIS,YE};
 
@@ -109,7 +109,7 @@ class condition: public item{
 };
 
 class mesh{
-        float parameters[5];
+        float parameters[6];
         int sizes[3];
         node *node_list;
         element *element_list;
@@ -118,9 +118,9 @@ class mesh{
         //condition *neumann_list;
     public:
         void setParameters(float tau,float k_kte, float delta, float lambda, float eta, float f_x, float f_y){
-            parameters[ADJECTIVE_VELOCITY]=tau;
-            parameters[DYNAMIC_VISCOSITY]=k_kte;
-            parameters[DENSITY]=delta;
+            parameters[TAU]=tau;
+            parameters[K_KTE]=k_kte;
+            parameters[DELTA]=delta;
             parameters[LAMBDA]=lambda;
             parameters[ETA]=eta;
             parameters[EXTERNAL_FORCE_X]=f_x;
